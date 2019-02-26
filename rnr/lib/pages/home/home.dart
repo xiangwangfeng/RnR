@@ -16,7 +16,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         backgroundColor: Colors.white,
         body: Center(
           child: Calendar(
-            isExpandable: true,
+
           )
         )
         );

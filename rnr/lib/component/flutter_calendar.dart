@@ -10,7 +10,6 @@ typedef DayBuilder(BuildContext context, DateTime day);
 class Calendar extends StatefulWidget {
   final ValueChanged<DateTime> onDateSelected;
   final ValueChanged<Tuple2<DateTime, DateTime>> onSelectedRangeChange;
-  final bool isExpandable;
   final DayBuilder dayBuilder;
   final bool showChevronsToChangeRange;
   final bool showTodayAction;
@@ -20,7 +19,6 @@ class Calendar extends StatefulWidget {
   Calendar(
       {this.onDateSelected,
       this.onSelectedRangeChange,
-      this.isExpandable: false,
       this.dayBuilder,
       this.showTodayAction: true,
       this.showChevronsToChangeRange: true,
@@ -37,7 +35,6 @@ class _CalendarState extends State<Calendar> {
   Iterable<DateTime> selectedWeeksDays;
   DateTime _selectedDate = new DateTime.now();
   String currentMonth;
-  bool isExpanded = true;
   String displayMonth;
   DateTime get selectedDate => _selectedDate;
 
@@ -72,11 +69,11 @@ class _CalendarState extends State<Calendar> {
 
     if (widget.showChevronsToChangeRange) {
       leftOuterIcon = new IconButton(
-        onPressed: isExpanded ? previousMonth : previousWeek,
+        onPressed:  previousMonth,
         icon: new Icon(Icons.chevron_left),
       );
       rightOuterIcon = new IconButton(
-        onPressed: isExpanded ? nextMonth : nextWeek,
+        onPressed: nextMonth ,
         icon: new Icon(Icons.chevron_right),
       );
     } else {
@@ -129,8 +126,7 @@ class _CalendarState extends State<Calendar> {
 
   List<Widget> calendarBuilder() {
     List<Widget> dayWidgets = [];
-    List<DateTime> calendarDays =
-        isExpanded ? selectedMonthsDays : selectedWeeksDays;
+    List<DateTime> calendarDays = selectedMonthsDays ;
 
     Utils.weekdays.forEach(
       (day) {
@@ -182,9 +178,7 @@ class _CalendarState extends State<Calendar> {
   TextStyle configureDateStyle(monthStarted, monthEnded) {
     TextStyle dateStyles;
     final TextStyle body1Style = Theme.of(context).textTheme.body1;
-
-    if (isExpanded) {
-      final TextStyle body1StyleDisabled = body1Style.copyWith(
+    final TextStyle body1StyleDisabled = body1Style.copyWith(
         color: Color.fromARGB(
           100, 
           body1Style.color.red, 
@@ -196,32 +190,9 @@ class _CalendarState extends State<Calendar> {
       dateStyles = monthStarted && !monthEnded
           ? body1Style
           : body1StyleDisabled;
-    } else {
-      dateStyles = body1Style;
-    }
     return dateStyles;
   }
 
-  Widget get expansionButtonRow {
-    if (widget.isExpandable) {
-      return new Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          new Text(Utils.fullDayFormat(selectedDate)),
-          new IconButton(
-            iconSize: 20.0,
-            padding: new EdgeInsets.all(0.0),
-            onPressed: toggleExpanded,
-            icon: isExpanded
-                ? new Icon(Icons.arrow_drop_up)
-                : new Icon(Icons.arrow_drop_down),
-          ),
-        ],
-      );
-    } else {
-      return new Container();
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -231,11 +202,8 @@ class _CalendarState extends State<Calendar> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           nameAndIconRow,
-          new ExpansionCrossFade(
-            collapsed: calendarGridView,
-            expanded: calendarGridView,
-            isExpanded: isExpanded,
-          ),
+          calendarGridView,
+          
         ],
       ),
     );
@@ -358,25 +326,12 @@ class _CalendarState extends State<Calendar> {
 
   void endSwipe(DragEndDetails gestureDetails) {
     if (gestureDirection == 'rightToLeft') {
-      if (isExpanded) {
-        nextMonth();
-      } else {
-        nextWeek();
-      }
+      nextMonth();
     } else {
-      if (isExpanded) {
-        previousMonth();
-      } else {
-        previousWeek();
-      }
+      previousMonth();
     }
   }
 
-  void toggleExpanded() {
-    if (widget.isExpandable) {
-      setState(() => isExpanded = !isExpanded);
-    }
-  }
 
   void handleSelectedDateAndUserCallback(DateTime day) {
     var firstDayOfCurrentWeek = Utils.firstDayOfWeek(day);
