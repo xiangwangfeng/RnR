@@ -63,12 +63,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 if(callback !=null)
                   callback();
               },
-              label: Text(title),
+              label: Text(title,style: TextStyle(
+                color: Colors.white70,
+              ),),
               icon : Icon(Icons.flag,color: color,),
               color: Colors.blueGrey,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5),
-                
               ),
             )
     );   

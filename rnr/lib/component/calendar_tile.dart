@@ -9,17 +9,17 @@ class CalendarTile extends StatelessWidget {
   final bool isSelected;
   final TextStyle dayOfWeekStyles;
   final TextStyle dateStyles;
-  final Widget child;
+  final int flagCount;
 
   CalendarTile({
     this.onDateSelected,
     this.date,
-    this.child,
     this.dateStyles,
     this.dayOfWeek,
     this.dayOfWeekStyles,
     this.isDayOfWeek: false,
     this.isSelected: false,
+    this.flagCount = 0,
   });
 
   Widget renderDateOrDayOfWeek(BuildContext context) {
@@ -34,34 +34,44 @@ class CalendarTile extends StatelessWidget {
         ),
       );
     } else {
+      List<Widget> items =List();
+      items.add(new Text(
+                  Utils.formatDay(date).toString(),
+                  style: isSelected
+                      ? Theme.of(context).primaryTextTheme.body1
+                      : dateStyles,
+                  textAlign: TextAlign.center,
+                ));
+      for(var i = 0;i < flagCount;i++) {
+        
+        items.add(new Positioned(
+                  child: new Icon(Icons.flag,color: Colors.green,),
+                  width: 10,
+                  height: 10,
+                  right: (1 + i * 3).toDouble(),
+                  bottom: 1,
+                ));
+      }
+
       return new InkWell(
         onTap: onDateSelected,
         child: new Container(
-          decoration: isSelected
-              ? new BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Theme.of(context).primaryColor,
-                )
-              : new BoxDecoration(),
-          alignment: Alignment.center,
-          child: new Text(
-            Utils.formatDay(date).toString(),
-            style: isSelected ? Theme.of(context).primaryTextTheme.body1 : dateStyles,
-            textAlign: TextAlign.center,
-          ),
-        ),
+            decoration: isSelected
+                ? new BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Theme.of(context).primaryColor,
+                  )
+                : new BoxDecoration(),
+            alignment: Alignment.center,
+            child: Stack(
+              children: items,
+            )),
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (child != null) {
-      return new InkWell(
-        child: child,
-        onTap: onDateSelected,
-      );
-    }
     return new Container(
       child: renderDateOrDayOfWeek(context),
     );
