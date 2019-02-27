@@ -56,6 +56,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   Widget _itemContainer(String title,bool checked,VoidCallback callback) {
     Color color = checked ? Colors.green : Colors.red;
     return Container(
+            width: 300,
             margin: EdgeInsets.symmetric(vertical: 5),
             child :FlatButton.icon(
               onPressed: (){
@@ -64,6 +65,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               },
               label: Text(title),
               icon : Icon(Icons.flag,color: color,),
+              color: Colors.blueGrey,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5),
+                
+              ),
             )
     );   
   }

@@ -5,12 +5,10 @@ import 'package:tuple/tuple.dart';
 import 'package:date_utils/date_utils.dart';
 import 'package:rnr/component/calendar_tile.dart';
 
-typedef DayBuilder(BuildContext context, DateTime day);
 
 class Calendar extends StatefulWidget {
   final ValueChanged<DateTime> onDateSelected;
   final ValueChanged<Tuple2<DateTime, DateTime>> onSelectedRangeChange;
-  final DayBuilder dayBuilder;
   final bool showChevronsToChangeRange;
   final bool showTodayAction;
   final bool showCalendarPickerIcon;
@@ -19,7 +17,6 @@ class Calendar extends StatefulWidget {
   Calendar(
       {this.onDateSelected,
       this.onSelectedRangeChange,
-      this.dayBuilder,
       this.showTodayAction: true,
       this.showChevronsToChangeRange: true,
       this.showCalendarPickerIcon: true,
@@ -152,16 +149,7 @@ class _CalendarState extends State<Calendar> {
           monthStarted = true;
         }
 
-        if (this.widget.dayBuilder != null) {
-          dayWidgets.add(
-            new CalendarTile(
-              child: this.widget.dayBuilder(context, day),
-              date: day,
-              onDateSelected: () => handleSelectedDateAndUserCallback(day),
-            ),
-          );
-        } else {
-          dayWidgets.add(
+        dayWidgets.add(
             new CalendarTile(
               onDateSelected: () => handleSelectedDateAndUserCallback(day),
               date: day,
@@ -169,7 +157,6 @@ class _CalendarState extends State<Calendar> {
               isSelected: Utils.isSameDay(selectedDate, day),
             ),
           );
-        }
       },
     );
     return dayWidgets;
