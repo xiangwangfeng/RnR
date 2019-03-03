@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 import 'package:date_utils/date_utils.dart';
 import 'package:rnr/component/calendar_tile.dart';
+import 'package:rnr/model/record.dart';
+import 'package:rnr/style/styles.dart';
+
 
 
 class Calendar extends StatefulWidget {
@@ -17,9 +20,9 @@ class Calendar extends StatefulWidget {
   Calendar(
       {this.onDateSelected,
       this.onSelectedRangeChange,
-      this.showTodayAction: true,
+      this.showTodayAction: false,
       this.showChevronsToChangeRange: true,
-      this.showCalendarPickerIcon: true,
+      this.showCalendarPickerIcon: false,
       this.initialCalendarDateOverride});
 
   @override
@@ -67,11 +70,11 @@ class _CalendarState extends State<Calendar> {
     if (widget.showChevronsToChangeRange) {
       leftOuterIcon = new IconButton(
         onPressed:  previousMonth,
-        icon: new Icon(Icons.chevron_left),
+        icon: new Icon(Icons.chevron_left,color: kCalendarTextNormalColor,),
       );
       rightOuterIcon = new IconButton(
         onPressed: nextMonth ,
-        icon: new Icon(Icons.chevron_right),
+        icon: new Icon(Icons.chevron_right,color: kCalendarTextNormalColor,),
       );
     } else {
       leftOuterIcon = new Container();
@@ -96,6 +99,7 @@ class _CalendarState extends State<Calendar> {
           displayMonth,
           style: new TextStyle(
             fontSize: 20.0,
+            color: kCalendarTextNormalColor,
           ),
         ),
         rightInnerIcon ?? new Container(),
@@ -106,6 +110,7 @@ class _CalendarState extends State<Calendar> {
 
   Widget get calendarGridView {
     return new Container(
+      color: kCalendarBackgroundColor,
       child: new GestureDetector(
         onHorizontalDragStart: (gestureDetails) => beginSwipe(gestureDetails),
         onHorizontalDragUpdate: (gestureDetails) =>
@@ -123,7 +128,9 @@ class _CalendarState extends State<Calendar> {
 
   List<Widget> calendarBuilder() {
     List<Widget> dayWidgets = [];
-    List<DateTime> calendarDays = selectedMonthsDays ;
+    List<DateTime> calendarDays = selectedMonthsDays;
+    
+  
 
     Utils.weekdays.forEach(
       (day) {
@@ -131,6 +138,7 @@ class _CalendarState extends State<Calendar> {
           new CalendarTile(
             isDayOfWeek: true,
             dayOfWeek: day,
+            dayOfWeekStyles: TextStyle(color: kCalendarTextNormalColor),
           ),
         );
       },
@@ -155,6 +163,7 @@ class _CalendarState extends State<Calendar> {
               date: day,
               dateStyles: configureDateStyle(monthStarted, monthEnded),
               isSelected: Utils.isSameDay(selectedDate, day),
+              flag: configureFlagType(monthStarted,monthEnded,day),
             ),
           );
       },
@@ -162,22 +171,30 @@ class _CalendarState extends State<Calendar> {
     return dayWidgets;
   }
 
-  TextStyle configureDateStyle(monthStarted, monthEnded) {
-    TextStyle dateStyles;
-    final TextStyle body1Style = Theme.of(context).textTheme.body1;
-    final TextStyle body1StyleDisabled = body1Style.copyWith(
-        color: Color.fromARGB(
-          100, 
-          body1Style.color.red, 
-          body1Style.color.green, 
-          body1Style.color.blue,
-        )
-      );
+  CalendarFlagType configureFlagType(monthStarted, monthEnded,day) {
+    if (monthStarted && !monthEnded) {
+        Records records =Records.shared;
+        bool runned = records.runned(day);
+        bool read =records.read(day);
+        if (runned && read) {
+          return CalendarFlagType.Green;
+        }
+        else if((runned && !read) || 
+                (!runned && read)) {
+          return CalendarFlagType.Yellow;
+        }
+    }
+    return CalendarFlagType.None;
+  }
 
-      dateStyles = monthStarted && !monthEnded
-          ? body1Style
-          : body1StyleDisabled;
-    return dateStyles;
+  TextStyle configureDateStyle(monthStarted, monthEnded) {
+    final textStyle =TextStyle(
+      color: kCalendarTextNormalColor,
+    );
+    final textStyleDisabled =TextStyle(
+      color: kCalendarTextDisabledColor,
+    );
+    return monthStarted && !monthEnded ? textStyle :textStyleDisabled;
   }
 
 

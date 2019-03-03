@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:date_utils/date_utils.dart';
+import 'package:rnr/style/styles.dart';
+
+enum CalendarFlagType{
+  None,
+  Yellow,
+  Green,
+}
 
 class CalendarTile extends StatelessWidget {
   final VoidCallback onDateSelected;
@@ -9,7 +16,7 @@ class CalendarTile extends StatelessWidget {
   final bool isSelected;
   final TextStyle dayOfWeekStyles;
   final TextStyle dateStyles;
-  final int flagCount;
+  final CalendarFlagType flag;
 
   CalendarTile({
     this.onDateSelected,
@@ -19,7 +26,7 @@ class CalendarTile extends StatelessWidget {
     this.dayOfWeekStyles,
     this.isDayOfWeek: false,
     this.isSelected: false,
-    this.flagCount = 0,
+    this.flag :CalendarFlagType.None,
   });
 
   Widget renderDateOrDayOfWeek(BuildContext context) {
@@ -38,17 +45,18 @@ class CalendarTile extends StatelessWidget {
       items.add(new Text(
                   Utils.formatDay(date).toString(),
                   style: isSelected
-                      ? Theme.of(context).primaryTextTheme.body1
+                      ? TextStyle(color: kCalendarTextSelectedColor)
                       : dateStyles,
                   textAlign: TextAlign.center,
                 ));
-      for(var i = 0;i < flagCount;i++) {
-        
+
+      Color flagColor =configureFlagColor(this.flag);
+      if(flagColor !=null) {
         items.add(new Positioned(
-                  child: new Icon(Icons.flag,color: Colors.green,),
+                  child: new Icon(Icons.flag,color:flagColor,),
                   width: 10,
                   height: 10,
-                  right: (1 + i * 3).toDouble(),
+                  right: 1,
                   bottom: 1,
                 ));
       }
@@ -59,7 +67,7 @@ class CalendarTile extends StatelessWidget {
             decoration: isSelected
                 ? new BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Theme.of(context).primaryColor,
+                    color: kCalendarSelectCircleColor,
                   )
                 : new BoxDecoration(),
             alignment: Alignment.center,
@@ -75,5 +83,19 @@ class CalendarTile extends StatelessWidget {
     return new Container(
       child: renderDateOrDayOfWeek(context),
     );
+  }
+
+  Color configureFlagColor(type) {
+    Color flagColor;
+    switch (this.flag) {
+        case CalendarFlagType.Green:
+          flagColor = Colors.green;
+          break;
+        case CalendarFlagType.Yellow:
+          flagColor = Colors.yellow;
+          break;
+        default:
+      }
+      return flagColor;
   }
 }

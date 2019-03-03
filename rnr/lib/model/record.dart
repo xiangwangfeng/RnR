@@ -6,6 +6,16 @@ class Record extends Object
 
 class Records extends Object
 {
+  static Records _instance;
+  static Records _getInstance() {
+    if (_instance ==null) {
+      _instance = new Records();
+    }
+    return _instance;
+  }
+
+  static Records get shared => _getInstance();
+
   Map<String,Record> _records =Map();
 
   void setRunned(bool flag,DateTime date) {
