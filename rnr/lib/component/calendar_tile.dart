@@ -2,12 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:date_utils/date_utils.dart';
 import 'package:rnr/style/styles.dart';
 
-enum CalendarFlagType{
-  None,
-  Yellow,
-  Green,
-}
-
 class CalendarTile extends StatelessWidget {
   final VoidCallback onDateSelected;
   final DateTime date;
@@ -16,7 +10,7 @@ class CalendarTile extends StatelessWidget {
   final bool isSelected;
   final TextStyle dayOfWeekStyles;
   final TextStyle dateStyles;
-  final CalendarFlagType flag;
+  final String subTitle;
 
   CalendarTile({
     this.onDateSelected,
@@ -26,7 +20,7 @@ class CalendarTile extends StatelessWidget {
     this.dayOfWeekStyles,
     this.isDayOfWeek: false,
     this.isSelected: false,
-    this.flag :CalendarFlagType.None,
+    this.subTitle,
   });
 
   Widget renderDateOrDayOfWeek(BuildContext context) {
@@ -50,10 +44,11 @@ class CalendarTile extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ));
 
-      Color flagColor =configureFlagColor(this.flag);
-      if(flagColor !=null) {
+      if(this.subTitle !=null) {
         items.add(new Positioned(
-                  child: new Icon(Icons.flag,color:flagColor,),
+                  child: Text(subTitle,style: TextStyle(
+                    fontSize: 10,
+                  ),),
                   width: 10,
                   height: 10,
                   right: 1,
@@ -75,7 +70,7 @@ class CalendarTile extends StatelessWidget {
               children: items,
             )),
       );
-    }
+    }   
   }
 
   @override
@@ -83,19 +78,5 @@ class CalendarTile extends StatelessWidget {
     return new Container(
       child: renderDateOrDayOfWeek(context),
     );
-  }
-
-  Color configureFlagColor(type) {
-    Color flagColor;
-    switch (this.flag) {
-        case CalendarFlagType.Green:
-          flagColor = kCalendarFlagDoneColor;
-          break;
-        case CalendarFlagType.Yellow:
-          flagColor = kCalendarFlagHalfColor;
-          break;
-        default:
-      }
-      return flagColor;
   }
 }

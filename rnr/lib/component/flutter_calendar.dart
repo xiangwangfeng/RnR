@@ -163,7 +163,7 @@ class _CalendarState extends State<Calendar> {
               date: day,
               dateStyles: configureDateStyle(monthStarted, monthEnded),
               isSelected: Utils.isSameDay(selectedDate, day),
-              flag: configureFlagType(monthStarted,monthEnded,day),
+              subTitle: configureSubTitle(monthStarted,monthEnded,day),
             ),
           );
       },
@@ -171,20 +171,22 @@ class _CalendarState extends State<Calendar> {
     return dayWidgets;
   }
 
-  CalendarFlagType configureFlagType(monthStarted, monthEnded,day) {
+  String configureSubTitle(monthStarted, monthEnded,day) {
     if (monthStarted && !monthEnded) {
         Records records =Records.shared;
         bool runned = records.runned(day);
         bool read =records.read(day);
         if (runned && read) {
-          return CalendarFlagType.Green;
+          return "📖 🏃";
         }
-        else if((runned && !read) || 
-                (!runned && read)) {
-          return CalendarFlagType.Yellow;
+        else if(runned){
+          return "🏃";
         }
+        else if(read){
+          return "📖";
+        } 
     }
-    return CalendarFlagType.None;
+    return null;
   }
 
   TextStyle configureDateStyle(monthStarted, monthEnded) {
