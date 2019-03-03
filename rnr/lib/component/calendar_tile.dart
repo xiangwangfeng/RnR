@@ -89,10 +89,10 @@ class CalendarTile extends StatelessWidget {
     Color flagColor;
     switch (this.flag) {
         case CalendarFlagType.Green:
-          flagColor = Colors.green;
+          flagColor = kCalendarFlagDoneColor;
           break;
         case CalendarFlagType.Yellow:
-          flagColor = Colors.yellow;
+          flagColor = kCalendarFlagHalfColor;
           break;
         default:
       }
