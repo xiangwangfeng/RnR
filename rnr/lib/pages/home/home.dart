@@ -24,6 +24,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 this.date = day;
               });
             },
+            onSelectedRangeChange: (dayRange) {
+              this.setState((){
+                this.date =dayRange.item1;
+              });
+            }
           ),
           _contentConatiner(date),
         ],
