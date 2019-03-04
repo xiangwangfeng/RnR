@@ -35,25 +35,29 @@ class CalendarTile extends StatelessWidget {
         ),
       );
     } else {
-      List<Widget> items =List();
-      items.add(new Text(
-                  Utils.formatDay(date).toString(),
-                  style: isSelected
-                      ? TextStyle(color: kCalendarTextSelectedColor)
-                      : dateStyles,
-                  textAlign: TextAlign.center,
-                ));
+      List<Widget> items = List();
+      items.add(Align(alignment: Alignment.center,child: Text(
+        Utils.formatDay(date).toString(),
+        style: isSelected
+            ? TextStyle(color: kCalendarTextSelectedColor)
+            : dateStyles,
+        textAlign: TextAlign.center,
+      )));
 
-      if(this.subTitle !=null) {
-        items.add(new Positioned(
-                  child: Text(subTitle,style: TextStyle(
-                    fontSize: 10,
-                  ),),
-                  width: 10,
-                  height: 10,
-                  right: 1,
-                  bottom: 1,
-                ));
+      if (this.subTitle != null) {
+        items.add(new Align(
+          alignment: Alignment.bottomCenter,
+          child :Container(
+            margin: EdgeInsets.only(bottom: 5),
+            child: Text(
+              subTitle,
+              style: TextStyle(
+                fontSize: 10,
+              ),
+            ),
+          )
+          
+        ));
       }
 
       return new InkWell(
@@ -70,7 +74,7 @@ class CalendarTile extends StatelessWidget {
               children: items,
             )),
       );
-    }   
+    }
   }
 
   @override
