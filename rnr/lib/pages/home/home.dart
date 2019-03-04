@@ -37,10 +37,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     bool read = records.read(date);
 
     return Container(
-      margin: EdgeInsets.only(top: 10, left: 20),
+      margin: EdgeInsets.only(top: 10),
       child: Column(children: <Widget>[
-        Align(
-          alignment: Alignment.centerLeft,
+        Container(
+          child: Align(
+          alignment: Alignment.center,
+          
           child: Text(
             '人生，唯有这两件事不可辜负：读书，跑步。',
             style: TextStyle(
@@ -49,41 +51,42 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             ),
           ),
         ),
+        ),
         Container(
           margin: EdgeInsets.only(top: 20),
+          child: Row(
+            mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              _itemContainer('读书', '📖', read, () {
+                this.setState(() {
+                  records.setRead(!read, date);
+                });
+              }),
+              _itemContainer('跑步', '🏃', runned, () {
+                this.setState(() {
+                  records.setRunned(!runned, date);
+                });
+              }),
+            ],
+          ),
         ),
-        _itemContainer('读书   📖', read, () {
-          this.setState(() {
-            records.setRead(!read, date);
-          });
-        }),
-        _itemContainer('跑步   🏃', runned, () {
-          this.setState(() {
-            records.setRunned(!runned, date);
-          });
-        }),
       ]),
     );
   }
 
-  Widget _itemContainer(String title, bool checked, VoidCallback callback) {
-    Color color = checked ? Colors.green : Colors.red;
+  Widget _itemContainer(String prefix, String suffix, bool checked, VoidCallback callback) {
+    String title = checked ? prefix + " " + suffix : prefix;
     return Container(
-        width: 300,
-        margin: EdgeInsets.symmetric(vertical: 5),
-        child: FlatButton.icon(
+        width: 150,
+        child:FlatButton(
           onPressed: () {
             if (callback != null) callback();
           },
-          label: Text(
+          child: Text(
             title,
             style: TextStyle(
               color: Colors.white70,
             ),
-          ),
-          icon: Icon(
-            Icons.flag,
-            color: color,
           ),
           color: kAppButtonBackgroundColor,
           shape: RoundedRectangleBorder(
