@@ -12,6 +12,16 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   DateTime date = DateTime.now();
 
   @override
+  void initState() {
+    Records.shared.loadFromCache().then((value){
+      this.setState((){
+
+      });
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kAppBackgroundColor,
