@@ -13,9 +13,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
   @override
   void initState() {
-    Records.shared.loadFromCache().then((value){
+    Records.shared.loadFromCache().then((value) {
       this.setState((){
-
       });
     });
     super.initState();
@@ -26,7 +25,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     return Scaffold(
       backgroundColor: kAppBackgroundColor,
       body: SafeArea(
-          child: Column(
+          child:_homeWidget(),),
+    );
+  }
+
+  Widget _homeWidget() {
+    return Column(
         children: <Widget>[
           Calendar(
             onDateSelected: (day) {
@@ -42,8 +46,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           ),
           _contentConatiner(date),
         ],
-      )),
-    );
+      );
   }
 
   Widget _contentConatiner(DateTime date) {
@@ -77,7 +80,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   records.setRead(!read, date);
                 });
               }),
-              _itemContainer('跑步', '🏃', runned, () {
+              _itemContainer('跑步','🏃', runned, () {
                 this.setState(() {
                   records.setRunned(!runned, date);
                 });
