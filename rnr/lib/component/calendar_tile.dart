@@ -11,6 +11,7 @@ class CalendarTile extends StatelessWidget {
   final TextStyle dayOfWeekStyles;
   final TextStyle dateStyles;
   final String subTitle;
+  final bool isToday;
 
   CalendarTile({
     this.onDateSelected,
@@ -21,6 +22,7 @@ class CalendarTile extends StatelessWidget {
     this.isDayOfWeek: false,
     this.isSelected: false,
     this.subTitle,
+    this.isToday :false,
   });
 
   Widget renderDateOrDayOfWeek(BuildContext context) {
@@ -35,12 +37,14 @@ class CalendarTile extends StatelessWidget {
         ),
       );
     } else {
+      bool isToday =Utils.isSameDay(date,DateTime.now());
+
       List<Widget> items = List();
       items.add(Align(alignment: Alignment.center,child: Text(
         Utils.formatDay(date).toString(),
-        style: isSelected
+        style: isSelected 
             ? TextStyle(color: kCalendarTextSelectedColor)
-            : dateStyles,
+            : isToday ? TextStyle(color: kCalendarTextHighlightColor) : dateStyles,
         textAlign: TextAlign.center,
       )));
 
@@ -63,10 +67,10 @@ class CalendarTile extends StatelessWidget {
       return new InkWell(
         onTap: onDateSelected,
         child: new Container(
-            decoration: isSelected
+            decoration: isSelected 
                 ? new BoxDecoration(
                     shape: BoxShape.circle,
-                    color: kCalendarSelectCircleColor,
+                    color:  kCalendarSelectCircleColor,
                   )
                 : new BoxDecoration(),
             alignment: Alignment.center,

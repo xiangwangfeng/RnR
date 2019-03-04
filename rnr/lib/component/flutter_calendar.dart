@@ -129,7 +129,7 @@ class _CalendarState extends State<Calendar> {
   List<Widget> calendarBuilder() {
     List<Widget> dayWidgets = [];
     List<DateTime> calendarDays = selectedMonthsDays;
-    
+    var now =DateTime.now();
   
 
     Utils.weekdays.forEach(
@@ -164,6 +164,7 @@ class _CalendarState extends State<Calendar> {
               dateStyles: configureDateStyle(monthStarted, monthEnded),
               isSelected: Utils.isSameDay(selectedDate, day),
               subTitle: configureSubTitle(monthStarted,monthEnded,day),
+              isToday: Utils.isSameDay(day, now),
             ),
           );
       },
