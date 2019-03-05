@@ -64,7 +64,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           child: Text(
             '人生，唯有这两件事不可辜负：读书，跑步。',
             style: TextStyle(
-              color: kCalendarTextDisabledColor,
+              color: kCalendarTextHighlightColor,
               fontSize: 15,
             ),
           ),
