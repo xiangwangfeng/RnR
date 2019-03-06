@@ -14,8 +14,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   @override
   void initState() {
     Records.shared.loadFromCache().then((value) {
-      this.setState((){
-      });
+      this.setState(() {});
     });
     super.initState();
   }
@@ -25,64 +24,75 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     return Scaffold(
       backgroundColor: kAppBackgroundColor,
       body: SafeArea(
-          child:_homeWidget(),),
+        child: _homeWidget(),
+      ),
     );
   }
 
   Widget _homeWidget() {
     return Column(
-        children: <Widget>[
-          Calendar(
-            onDateSelected: (day) {
-              this.setState(() {
-                this.date = day;
-              });
-            },
-            onSelectedRangeChange: (dayRange) {
-              this.setState((){
-                this.date =dayRange.item1;
-              });
-            }
-          ),
-          _contentConatiner(date),
-        ],
-      );
+      children: <Widget>[
+        Calendar(onDateSelected: (day) {
+          this.setState(() {
+            this.date = day;
+          });
+        }, onSelectedRangeChange: (dayRange) {
+          this.setState(() {
+            this.date = dayRange.item1;
+          });
+        }),
+        _contentConatiner(date),
+      ],
+    );
   }
 
   Widget _contentConatiner(DateTime date) {
     var records = Records.shared;
     bool runned = records.runned(date);
     bool read = records.read(date);
+    bool zous = records.zous(date);
 
     return Container(
       margin: EdgeInsets.only(top: 10),
       child: Column(children: <Widget>[
         Container(
           child: Align(
-          alignment: Alignment.center,
-          
-          child: Text(
-            '人生，唯有这两件事不可辜负：读书，跑步。',
-            style: TextStyle(
-              color: kCalendarTextHighlightColor,
-              fontSize: 15,
+            alignment: Alignment.center,
+            child: Text(
+              '人生，唯有这些事不可辜负：读书，跑步还有Zous!',
+              style: TextStyle(
+                color: kCalendarTextHighlightColor,
+                fontSize: 15,
+              ),
             ),
           ),
-        ),
         ),
         Container(
           margin: EdgeInsets.only(top: 20),
           child: Row(
-            mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               _itemContainer('读书', '📖', read, () {
                 this.setState(() {
                   records.setRead(!read, date);
                 });
               }),
-              _itemContainer('跑步','🏃', runned, () {
+              _itemContainer('跑步', '🏃', runned, () {
                 this.setState(() {
                   records.setRunned(!runned, date);
+                });
+              }),
+            ],
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(top: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              _itemContainer('Zous', '💦', zous, () {
+                this.setState(() {
+                  records.setZous(!zous, date);
                 });
               }),
             ],
@@ -92,11 +102,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     );
   }
 
-  Widget _itemContainer(String prefix, String suffix, bool checked, VoidCallback callback) {
+  Widget _itemContainer(
+      String prefix, String suffix, bool checked, VoidCallback callback) {
     String title = checked ? prefix + " " + suffix : prefix;
     return Container(
         width: 150,
-        child:FlatButton(
+        child: FlatButton(
           onPressed: () {
             if (callback != null) callback();
           },

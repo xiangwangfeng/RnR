@@ -6,18 +6,21 @@ import 'package:path_provider/path_provider.dart';
 class Record extends Object {
   bool read = false;
   bool runned = false;
+  bool zous = false;
 
-  Record({this.read =false, this.runned =false});
+  Record({this.read = false, this.runned = false, this.zous = false});
   factory Record.fromJson(Map<String, dynamic> json) {
     return new Record(
       read: json['read'],
       runned: json['runned'],
+      zous: json['zous'],
     );
   }
 
   Map<String, dynamic> toJson() => {
         'read': read,
         'runned': runned,
+        'zous':zous,
       };
 }
 
@@ -35,20 +38,31 @@ class Records extends Object {
   Map<String, Record> _records;
 
   Future loadFromCache() async {
-    _records =Map();
+    _records = Map();
     try {
-
       var filepath = await _filePath();
-      var file =File(filepath);
+      var file = File(filepath);
       String content = await file.readAsString();
-      Map<String,dynamic> json = jsonDecode(content);
-      json.forEach((k,v){
-        Record record =Record.fromJson(v);
-        _records[k] =record;
+      Map<String, dynamic> json = jsonDecode(content);
+      json.forEach((k, v) {
+        Record record = Record.fromJson(v);
+        _records[k] = record;
       });
-      } catch (e) {
-        print('get exception');
+    } catch (e) {
+      print('get exception');
     }
+  }
+
+  void setZous(bool flag, DateTime date) {
+    var record = _createRecord(date);
+    record.zous = flag;
+    _setRecod(record, date);
+  }
+
+  bool zous(DateTime date) {
+    var key = _keyBy(date);
+    var record = _records[key];
+    return record != null ? record.zous : false;
   }
 
   void setRunned(bool flag, DateTime date) {
@@ -94,11 +108,9 @@ class Records extends Object {
     return date.year.toString() +
         '-' +
         date.month.toString() +
-        '-' + 
+        '-' +
         date.day.toString();
   }
-
-  
 
   Future _saveFile() async {
     try {
