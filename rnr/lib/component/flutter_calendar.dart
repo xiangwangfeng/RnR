@@ -7,6 +7,8 @@ import 'package:rnr/component/calendar_tile.dart';
 import 'package:rnr/model/record.dart';
 import 'package:rnr/style/styles.dart';
 
+
+
 class Calendar extends StatefulWidget {
   final ValueChanged<DateTime> onDateSelected;
   final ValueChanged<Tuple2<DateTime, DateTime>> onSelectedRangeChange;
@@ -67,18 +69,12 @@ class _CalendarState extends State<Calendar> {
 
     if (widget.showChevronsToChangeRange) {
       leftOuterIcon = new IconButton(
-        onPressed: previousMonth,
-        icon: new Icon(
-          Icons.chevron_left,
-          color: kCalendarTextNormalColor,
-        ),
+        onPressed:  previousMonth,
+        icon: new Icon(Icons.chevron_left,color: kCalendarTextNormalColor,),
       );
       rightOuterIcon = new IconButton(
-        onPressed: nextMonth,
-        icon: new Icon(
-          Icons.chevron_right,
-          color: kCalendarTextNormalColor,
-        ),
+        onPressed: nextMonth ,
+        icon: new Icon(Icons.chevron_right,color: kCalendarTextNormalColor,),
       );
     } else {
       leftOuterIcon = new Container();
@@ -133,7 +129,8 @@ class _CalendarState extends State<Calendar> {
   List<Widget> calendarBuilder() {
     List<Widget> dayWidgets = [];
     List<DateTime> calendarDays = selectedMonthsDays;
-    var now = DateTime.now();
+    var now =DateTime.now();
+  
 
     Utils.weekdays.forEach(
       (day) {
@@ -161,50 +158,48 @@ class _CalendarState extends State<Calendar> {
         }
 
         dayWidgets.add(
-          new CalendarTile(
-            onDateSelected: () => handleSelectedDateAndUserCallback(day),
-            date: day,
-            dateStyles: configureDateStyle(monthStarted, monthEnded),
-            isSelected: Utils.isSameDay(selectedDate, day),
-            subTitle: configureSubTitle(monthStarted, monthEnded, day),
-            isToday: Utils.isSameDay(day, now),
-          ),
-        );
+            new CalendarTile(
+              onDateSelected: () => handleSelectedDateAndUserCallback(day),
+              date: day,
+              dateStyles: configureDateStyle(monthStarted, monthEnded),
+              isSelected: Utils.isSameDay(selectedDate, day),
+              subTitle: configureSubTitle(monthStarted,monthEnded,day),
+              isToday: Utils.isSameDay(day, now),
+            ),
+          );
       },
     );
     return dayWidgets;
   }
 
-  String configureSubTitle(monthStarted, monthEnded, day) {
+  String configureSubTitle(monthStarted, monthEnded,day) {
     if (monthStarted && !monthEnded) {
-      Records records = Records.shared;
-      bool runned = records.runned(day);
-      bool read = records.read(day);
-      bool zous = records.zous(day);
-      List<String> emojis = [];
-      if (read) {
-        emojis.add("📖");
-      }
-      if (runned) {
-        emojis.add("🏃");
-      }
-      if (zous) {
-        emojis.add("💦");
-      }
-      return emojis.join(" ");
+        Records records =Records.shared;
+        bool runned = records.runned(day);
+        bool read =records.read(day);
+        if (runned && read) {
+          return "📖 🏃";
+        }
+        else if(runned){
+          return "🏃";
+        }
+        else if(read){
+          return "📖";
+        } 
     }
     return null;
   }
 
   TextStyle configureDateStyle(monthStarted, monthEnded) {
-    final textStyle = TextStyle(
+    final textStyle =TextStyle(
       color: kCalendarTextNormalColor,
     );
-    final textStyleDisabled = TextStyle(
+    final textStyleDisabled =TextStyle(
       color: kCalendarTextDisabledColor,
     );
-    return monthStarted && !monthEnded ? textStyle : textStyleDisabled;
+    return monthStarted && !monthEnded ? textStyle :textStyleDisabled;
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -215,6 +210,7 @@ class _CalendarState extends State<Calendar> {
         children: <Widget>[
           nameAndIconRow,
           calendarGridView,
+          
         ],
       ),
     );
@@ -342,6 +338,7 @@ class _CalendarState extends State<Calendar> {
       previousMonth();
     }
   }
+
 
   void handleSelectedDateAndUserCallback(DateTime day) {
     var firstDayOfCurrentWeek = Utils.firstDayOfWeek(day);
