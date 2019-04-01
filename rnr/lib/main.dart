@@ -13,14 +13,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        scaffoldBackgroundColor: kAppBackgroundColor,
+        scaffoldBackgroundColor: kAppBackgroundColor,   
+        primaryColor: kAppPrimaryColor,
+
         textTheme: TextTheme(
           subhead: TextStyle(
-            color: kAppButtonBackgroundColor,
+            color: kAppSubHeadTextColor,
           )
         ),
         iconTheme: IconThemeData(
-          color: kAppButtonBackgroundColor,
+          color: kAppIconColor,
         ),
       ),
       home: MainPage(),

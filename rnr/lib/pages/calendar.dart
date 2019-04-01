@@ -23,7 +23,6 @@ class _CalendarPageWidgetState extends State<CalendarPageWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kAppBackgroundColor,
       body: SafeArea(
           child:_homeWidget(),),
     );
@@ -97,6 +96,7 @@ class _CalendarPageWidgetState extends State<CalendarPageWidget> {
     return Container(
         width: 150,
         child:FlatButton(
+          color: Colors.pink,
           onPressed: () {
             if (callback != null) callback();
           },
@@ -106,7 +106,6 @@ class _CalendarPageWidgetState extends State<CalendarPageWidget> {
               color: Colors.white70,
             ),
           ),
-          color: kAppButtonBackgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
           ),

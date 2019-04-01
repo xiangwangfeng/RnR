@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rnr/style/styles.dart';
+import 'gender.dart';
 
 class SettingPageWidget extends StatelessWidget {
 
@@ -13,14 +14,15 @@ class SettingPageWidget extends StatelessWidget {
           
           children: <Widget>[
             ListTile(
-              leading: Icon(Icons.tag_faces,color: kAppButtonBackgroundColor),
+              leading: Icon(Icons.tag_faces,color: kAppIconColor),
               title: Text('性别'),
               onTap: (){
+                pushToGenderPage(context);
                 
               },
             ),
             ListTile(
-              leading: Icon(Icons.info_outline,color: kAppButtonBackgroundColor),
+              leading: Icon(Icons.info_outline,color: kAppIconColor),
                title: Text('关于'),
             ),
             
@@ -28,6 +30,15 @@ class SettingPageWidget extends StatelessWidget {
         ),
         ) 
     );
+   }
+
+   void pushToGenderPage(BuildContext context) {
+     GenderPageWidget page = GenderPageWidget(boyCallback: (){
+       Navigator.pop(context);
+     },girlCallback: (){
+       Navigator.pop(context);
+     });
+     Navigator.push(context, MaterialPageRoute(builder: (context) => page));
    }
     
 }

@@ -17,9 +17,9 @@ class GenderPageWidget extends StatelessWidget {
             child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text('你是', style: TextStyle(color: Colors.white, fontSize: 70)),
+              Text('你是', style: TextStyle(color: Colors.pink, fontSize: 70)),
               _button('🏃‍♀️',girlCallback),
-              Text('OR', style: TextStyle(color: Colors.white, fontSize: 70)),
+              Text('OR', style: TextStyle(color: Colors.pink, fontSize: 70)),
               _button('🏃',boyCallback),
             ],
           )

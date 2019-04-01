@@ -7,7 +7,7 @@ class CheckInPageWidget extends StatelessWidget {
       appBar: AppBar(
         title: Text('打卡'),
       ),
-        body: Text('setting')
+        body: Text('CheckIn')
     );
    }
     
