@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rnr/component/flutter_calendar.dart';
 import 'package:rnr/model/record.dart';
-import 'package:rnr/style/styles.dart';
 import 'setting.dart';
+import 'package:rnr/model/config.dart';
 
 class CalendarPageWidget extends StatefulWidget {
   @override
@@ -15,8 +15,10 @@ class _CalendarPageWidgetState extends State<CalendarPageWidget> {
   @override
   void initState() {
      Records.shared.loadFromCache().then((value) {
-      this.setState((){
+       Configs.shared.loadFromCache().then((value) {
+          this.setState((){});
       });
+     
     });
     super.initState();
   }
@@ -89,12 +91,12 @@ class _CalendarPageWidgetState extends State<CalendarPageWidget> {
           child: Row(
             mainAxisAlignment:MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              _itemContainer('读书', '📖', read, () {
+              _itemContainer('读书', readEmoji(), read, () {
                 this.setState(() {
                   records.setRead(!read, date);
                 });
               }),
-              _itemContainer('跑步','🏃', runned, () {
+              _itemContainer('跑步',runEmoji(), runned, () {
                 this.setState(() {
                   records.setRunned(!runned, date);
                 });
@@ -108,10 +110,11 @@ class _CalendarPageWidgetState extends State<CalendarPageWidget> {
 
   Widget _itemContainer(String prefix, String suffix, bool checked, VoidCallback callback) {
     String title = checked ? prefix + " " + suffix : prefix;
+    Color color = checked ? Colors.pink : Colors.pinkAccent ;
     return Container(
         width: 150,
         child:FlatButton(
-          color: Colors.pink,
+          color: color,
           onPressed: () {
             if (callback != null) callback();
           },

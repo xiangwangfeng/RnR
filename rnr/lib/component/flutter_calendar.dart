@@ -6,6 +6,7 @@ import 'package:date_utils/date_utils.dart';
 import 'package:rnr/component/calendar_tile.dart';
 import 'package:rnr/model/record.dart';
 import 'package:rnr/style/styles.dart';
+import 'package:rnr/model/config.dart';
 
 
 
@@ -178,13 +179,13 @@ class _CalendarState extends State<Calendar> {
         bool runned = records.runned(day);
         bool read =records.read(day);
         if (runned && read) {
-          return "📖 🏃";
+          return readEmoji() + " " + runEmoji();
         }
         else if(runned){
-          return "🏃";
+          return runEmoji();
         }
         else if(read){
-          return "📖";
+          return readEmoji();
         } 
     }
     return null;

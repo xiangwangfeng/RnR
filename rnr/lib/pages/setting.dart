@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rnr/style/styles.dart';
 import 'gender.dart';
 import 'about.dart';
+import 'package:rnr/model/config.dart';
 
 class SettingPageWidget extends StatelessWidget {
 
@@ -38,8 +39,10 @@ class SettingPageWidget extends StatelessWidget {
 
    void _pushToGenderPage(BuildContext context) {
      GenderPageWidget page = GenderPageWidget(boyCallback: (){
+       Configs.shared.setBoy(true);
        Navigator.pop(context);
      },girlCallback: (){
+       Configs.shared.setBoy(false);
        Navigator.pop(context);
      });
      Navigator.push(context, MaterialPageRoute(builder: (context) => page));
