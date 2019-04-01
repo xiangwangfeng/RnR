@@ -12,8 +12,7 @@ class GenderPageWidget extends StatelessWidget {
       appBar: AppBar(
         title: Text('性别'),
       ),
-        body: SafeArea(
-      child: Align(
+        body: Align(
           alignment: Alignment.center,
           child:Container(
             margin: EdgeInsets.symmetric(vertical: 88),
@@ -28,7 +27,7 @@ class GenderPageWidget extends StatelessWidget {
           )
           )
           ),
-    ));
+    );
    }
 
    Widget _button(String title,VoidCallback callback) {
