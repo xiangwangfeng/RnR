@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rnr/style/styles.dart';
-import 'pages/main_page.dart';
+import 'pages/calendar.dart';
 
 
 void main() => runApp(MyApp());
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           color: kAppIconColor,
         ),
       ),
-      home: MainPage(),
+      home: CalendarPageWidget(),
     );
   }
 }

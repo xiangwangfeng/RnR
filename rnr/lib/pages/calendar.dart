@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rnr/component/flutter_calendar.dart';
 import 'package:rnr/model/record.dart';
 import 'package:rnr/style/styles.dart';
+import 'setting.dart';
 
 class CalendarPageWidget extends StatefulWidget {
   @override
@@ -13,7 +14,7 @@ class _CalendarPageWidgetState extends State<CalendarPageWidget> {
 
   @override
   void initState() {
-    Records.shared.loadFromCache().then((value) {
+     Records.shared.loadFromCache().then((value) {
       this.setState((){
       });
     });
@@ -24,11 +25,25 @@ class _CalendarPageWidgetState extends State<CalendarPageWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child:_homeWidget(),),
+          child:_calendarWidget(),),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.pink,
+        onPressed: (){
+          _pushToSettingPage(context);
+        },
+        child: Icon(Icons.settings),
+      ),
     );
   }
 
-  Widget _homeWidget() {
+  void _pushToSettingPage(context) {
+     Navigator.push(
+    context,
+    new MaterialPageRoute(builder: (context) => new SettingPageWidget()),
+  );
+  }
+
+  Widget _calendarWidget() {
     return Column(
         children: <Widget>[
           Calendar(
@@ -63,7 +78,7 @@ class _CalendarPageWidgetState extends State<CalendarPageWidget> {
           child: Text(
             '人生，唯有这两件事不可辜负：读书，跑步。',
             style: TextStyle(
-              color: kCalendarTextHighlightColor,
+              color: Colors.pink,
               fontSize: 15,
             ),
           ),
