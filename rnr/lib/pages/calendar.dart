@@ -3,12 +3,12 @@ import 'package:rnr/component/flutter_calendar.dart';
 import 'package:rnr/model/record.dart';
 import 'package:rnr/style/styles.dart';
 
-class HomePageWidget extends StatefulWidget {
+class CalendarPageWidget extends StatefulWidget {
   @override
-  _HomePageWidgetState createState() => _HomePageWidgetState();
+  _CalendarPageWidgetState createState() => _CalendarPageWidgetState();
 }
 
-class _HomePageWidgetState extends State<HomePageWidget> {
+class _CalendarPageWidgetState extends State<CalendarPageWidget> {
   DateTime date = DateTime.now();
 
   @override
