@@ -29,7 +29,7 @@ class _CalendarPageWidgetState extends State<CalendarPageWidget> {
       body: SafeArea(
           child:_calendarWidget(),),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.pink,
+        backgroundColor: Colors.blue,
         onPressed: (){
           _pushToSettingPage(context);
         },
@@ -80,7 +80,7 @@ class _CalendarPageWidgetState extends State<CalendarPageWidget> {
           child: Text(
             '人生，唯有这两件事不可辜负：读书，跑步。',
             style: TextStyle(
-              color: Colors.pink,
+              color: Colors.blue,
               fontSize: 15,
             ),
           ),
@@ -110,7 +110,7 @@ class _CalendarPageWidgetState extends State<CalendarPageWidget> {
 
   Widget _itemContainer(String prefix, String suffix, bool checked, VoidCallback callback) {
     String title = checked ? prefix + " " + suffix : prefix;
-    Color color = checked ? Colors.pink : Colors.pinkAccent ;
+    Color color = Colors.blue;
     return Container(
         width: 150,
         child:FlatButton(
