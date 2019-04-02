@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:tuple/tuple.dart';
 import 'package:date_utils/date_utils.dart';
 import 'package:rnr/component/calendar_tile.dart';
@@ -8,6 +9,10 @@ import 'package:rnr/model/record.dart';
 import 'package:rnr/style/styles.dart';
 import 'package:rnr/model/config.dart';
 
+class CalendarUtils {
+  static final DateFormat _monthFormat = new DateFormat("yyyy.M");
+  static String formatMonth(DateTime d) => _monthFormat.format(d);
+}
 
 
 class Calendar extends StatefulWidget {
@@ -50,7 +55,7 @@ class _CalendarState extends State<Calendar> {
         Utils.daysInRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek)
             .toList()
             .sublist(0, 7);
-    displayMonth = Utils.formatMonth(_selectedDate);
+    displayMonth = CalendarUtils.formatMonth(_selectedDate);
   }
 
   Widget get nameAndIconRow {
@@ -226,7 +231,7 @@ class _CalendarState extends State<Calendar> {
       selectedWeeksDays =
           Utils.daysInRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek)
               .toList();
-      displayMonth = Utils.formatMonth(_selectedDate);
+      displayMonth = CalendarUtils.formatMonth(_selectedDate);
     });
 
     _launchDateSelectionCallback(_selectedDate);
@@ -239,7 +244,7 @@ class _CalendarState extends State<Calendar> {
       var lastDateOfNewMonth = Utils.lastDayOfMonth(_selectedDate);
       updateSelectedRange(firstDateOfNewMonth, lastDateOfNewMonth);
       selectedMonthsDays = Utils.daysInMonth(_selectedDate);
-      displayMonth = Utils.formatMonth(_selectedDate);
+      displayMonth = CalendarUtils.formatMonth(_selectedDate);
     });
   }
 
@@ -250,7 +255,7 @@ class _CalendarState extends State<Calendar> {
       var lastDateOfNewMonth = Utils.lastDayOfMonth(_selectedDate);
       updateSelectedRange(firstDateOfNewMonth, lastDateOfNewMonth);
       selectedMonthsDays = Utils.daysInMonth(_selectedDate);
-      displayMonth = Utils.formatMonth(_selectedDate);
+      displayMonth = CalendarUtils.formatMonth(_selectedDate);
     });
   }
 
@@ -264,7 +269,7 @@ class _CalendarState extends State<Calendar> {
           Utils.daysInRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek)
               .toList()
               .sublist(0, 7);
-      displayMonth = Utils.formatMonth(_selectedDate);
+      displayMonth = CalendarUtils.formatMonth(_selectedDate);
     });
     _launchDateSelectionCallback(_selectedDate);
   }
@@ -279,7 +284,7 @@ class _CalendarState extends State<Calendar> {
           Utils.daysInRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek)
               .toList()
               .sublist(0, 7);
-      displayMonth = Utils.formatMonth(_selectedDate);
+      displayMonth = CalendarUtils.formatMonth(_selectedDate);
     });
     _launchDateSelectionCallback(_selectedDate);
   }
@@ -309,7 +314,7 @@ class _CalendarState extends State<Calendar> {
             Utils.daysInRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek)
                 .toList();
         selectedMonthsDays = Utils.daysInMonth(selected);
-        displayMonth = Utils.formatMonth(selected);
+        displayMonth = CalendarUtils.formatMonth(selected);
       });
       // updating selected date range based on selected week
       updateSelectedRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek);
