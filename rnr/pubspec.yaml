@@ -27,6 +27,7 @@ dev_dependencies:
   tuple: ^1.0.2
   path_provider: ^0.5.0+1
   shared_preferences: ^0.5.1+1
+  url_launcher: ^5.0.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
