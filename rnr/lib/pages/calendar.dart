@@ -48,7 +48,9 @@ class _CalendarPageWidgetState extends State<CalendarPageWidget> {
   Widget _calendarWidget() {
     return Column(
         children: <Widget>[
-          Calendar(
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 5,horizontal: 1),
+            child: Calendar(
             onDateSelected: (day) {
               this.setState(() {
                 this.date = day;
@@ -59,6 +61,7 @@ class _CalendarPageWidgetState extends State<CalendarPageWidget> {
                 this.date =dayRange.item1;
               });
             }
+          ),
           ),
           _contentConatiner(date),
         ],
