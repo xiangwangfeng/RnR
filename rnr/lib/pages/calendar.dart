@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:rnr/component/flutter_calendar.dart';
 import 'package:rnr/model/record.dart';
 import 'setting.dart';
@@ -25,9 +26,13 @@ class _CalendarPageWidgetState extends State<CalendarPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      body: SafeArea(
+      body:AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.dark,
+        child: SafeArea(
           child:_calendarWidget(),),
+      ) ,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blue,
         onPressed: (){
