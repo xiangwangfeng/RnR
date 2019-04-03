@@ -17,7 +17,7 @@ class SettingPageWidget extends StatelessWidget {
           children: <Widget>[
             ListTile(
               leading: Icon(Icons.tag_faces,color: kAppIconColor),
-              title: Text('性别'),
+              title: Text('跑步'),
               onTap: (){
                 _pushToGenderPage(context);
                 
