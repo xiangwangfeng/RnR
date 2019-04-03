@@ -10,7 +10,7 @@ class GenderPageWidget extends StatelessWidget {
    Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('跑步'),
+        title: Text('性别'),
       ),
         body: Align(
           alignment: Alignment.center,
